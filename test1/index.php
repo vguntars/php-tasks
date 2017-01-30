@@ -1,16 +1,23 @@
-<style>
-  table, td {border : 1px solid black}
-</style>
 <?php
+//TESTS Nr.1
+
 // uzdevums B
-function get_max_from_array(array $array): int {
+function get_max_from_array(array $array) {
   $res = null;
   foreach ($array as $value) if( $res === null || $res < intval($value)) $res = intval($value);
   return $res;
 }
-echo 'B: ' . get_max_from_array([4, 10, 3, 12]) . '<br><br>';
+echo 'B: ' . get_max_from_array([4, 10, 3, 12])
+?>
 
+<br><br>
+<style>
+  table, td {border : 1px solid black}
+</style>
+
+<?php
 // uzdevums D
+echo 'D: ';
 $table = [
   ['ID', 'Title', 'Name', 'Age'],
   [1, 'CEO', 'John', 35],
@@ -21,28 +28,31 @@ $table = [
   [6, 'Designer', 'Lee', 24]
 ];
 
-create_table($table);
+echo create_table($table);
 
-function create_table(array $array) {
-  $row = 0;
-  echo '<table>';
+function create_table(array $array) :string {
+  if (!count($array)) return '';
+  $rowNr = 0;
+  $table= '<table>';
   foreach ($array as $row_array) {
-    if ($row === 0){
-      echo '<thead>';
-      create_table_row('th', $row_array);
-      $row = 1;
-      echo '</thead><tbody>';
+    if ($rowNr === 0){
+      $table .= '<thead>';
+      $table .= create_table_row('th', $row_array);
+      $table .= '</thead><tbody>';
     }
     else {
-      create_table_row('td', $row_array);
+      $table .= create_table_row('td', $row_array);
     }
+    $rowNr++;
   }
-  echo '</tbody></table>';
+  $table .= '</tbody></table>';
+  return $table;
 }
 
-function create_table_row(string $tag_name ,array $row_array){
-  echo '<tr>';
-  foreach ($row_array as $value) echo '<' . $tag_name . '>' . $value . '</' . $tag_name . '>';
-  echo '</tr>';
+function create_table_row(string $tag_name, array $row_array) :string {
+  $row = '<tr>';
+  foreach ($row_array as $value) $row .= '<' . $tag_name . '>' . $value . '</' . $tag_name . '>';
+  $row .= '</tr>';
+  return $row;
   }
 ?>
